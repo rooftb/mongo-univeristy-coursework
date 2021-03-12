@@ -1,0 +1,74 @@
+// MongoDB Playground
+// To disable this template go to Settings | MongoDB | Use Default Template For Playground.
+// Make sure you are connected to enable completions and to be able to run a playground.
+// Use Ctrl+Space inside a snippet or a string literal to trigger completions.
+
+// Select the database to use.
+use('sample_training');
+
+db.trips.createIndex({ "start station id": 1, "birth year": 1 })
+
+
+// // Trips starting west of -74 Latitude
+// db.trips.find({'start station location.coordinates.0': {'$lt': -74}})
+
+// All Ceos named Mark
+// db.companies.find({'relationships.0.person.first_name': 'Mark', 'relationships.0.title': {'$regex': 'CEO'}},
+// {'name': 1}).pretty()
+
+
+// Return names only
+// db.companies.find({'funding_rounds': {'$size': 8}},
+// {'name': 1, "_id": 0}
+// )
+
+
+// How many companies are based in Seattle
+// db.companies.find(
+//     { "offices": { "$elemMatch": { "city": "Seattle" } }
+//                }).count()
+
+// db.trips.find({ "$expr": 
+// { "$and": 
+// [{ "$gt": 
+// [ "$tripduration", 1200 ]},
+// { "$eq": [ "$end station id", "$start station id" ]}
+// ]}}).count()
+
+
+// LAB 2 Array Operators
+// db.listingsAndReviews.find({"$and": [
+
+// {"property_type": {'$eq': "House"}},
+// { "amenities": {
+//                 "$all": [ "Changing table"]
+//                 }
+// }
+
+// ]}).count()
+
+// // LAB 1 Array Operators
+// db.listingsAndReviews.find({"$and": [
+
+// {"reviews": {"$size": 50}},
+// {'accommodates': {'$gt': 6}}
+
+// ]})
+// How many companies in the sample_training.companies collection have the same permalink as their twitter_username?
+// db.companies.find({'$expr':
+// {
+//     '$eq': ['$permalink', '$twitter_username']
+// }
+// }).count()
+
+// LAB 2 LOGIC OPERATORS
+// db.companies.find({'$or': [{'category_code': {'$eq': 'web'}}, {'category_code': {'$eq': 'social'}}]})
+// db.companies.find({'$or': 
+// // [{'category_code': {'$eq': 'web'}}, {'category_code': {'$eq': 'social'}}]}).count()
+// db.companies.find({'$or': 
+
+// [{'$and': [{'founded_year': {'$eq': 2004}}, {'$or': [{'category_code': {'$eq': 'web'}}, {'category_code': {'$eq': 'social'}}]}]}, 
+
+// {'$and': [{'founded_month': {'$eq': 10}}, {'$or': [{'category_code': {'$eq': 'web'}}, {'category_code': {'$eq': 'social'}}]}]}]
+
+// }).count()
