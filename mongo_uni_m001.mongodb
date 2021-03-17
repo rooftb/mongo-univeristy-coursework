@@ -8,6 +8,35 @@ use('sample_training');
 
 db.trips.createIndex({ "start station id": 1, "birth year": 1 })
 
+// storage:
+//   dbPath: /var/mongodb/db/3
+// net:
+//   bindIp: localhost
+//   port: 27001
+// security:
+//   authorization: enabled
+//   keyFile: /var/mongodb/pki/m103-keyfile  
+// systemLog:
+//   destination: file
+//   path: /var/mongodb/logs/mongod3.log
+//   logAppend: true
+// processManagement:
+//   fork: true
+// replication:
+//   replSetName: m103-repl
+
+
+// Create user as admin
+db.createUser({
+  user: "m103-application-user",
+  pwd: "m103-application-pass",
+  roles: [
+    { role: "readWrite", db: "applicationData" }
+  ]
+})
+
+mongoimport --port 27000 -u "m103-application-user" -p "m103-application-pass" --authenticationDatabase "products" /dataset/products.json
+
 
 // // Trips starting west of -74 Latitude
 // db.trips.find({'start station location.coordinates.0': {'$lt': -74}})
